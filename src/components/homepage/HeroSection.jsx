@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { companies } from "@/data/const";
+import { companies, faqs } from "@/data/const";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const HeroSection = () => {
   return (
     <div>
-      <section className="flex items-center justify-center px-4 sm:px-6 pt-16 sm:pt-12 pb-8 sm:pb-10">
+      <section className="flex items-center justify-center  pt-16 sm:pt-12 pb-8 sm:pb-10">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl text-white tracking-tighter py-4">
             Find Your Dream Job
@@ -83,6 +90,57 @@ const HeroSection = () => {
             ))}
           </CarouselContent>
         </Carousel>
+      </section>
+
+      <section className="pb-12 sm:pb-16 w-full">
+        <img
+          src="/banner.jpeg"
+          alt="Hirrd Banner"
+          className="w-full rounded-2xl object-cover shadow-2xl border border-gray-800"
+        />
+      </section>
+
+      <section className="pb-12 sm:pb-16 w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <Card className="bg-gray-900 border border-gray-800 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl">
+          <CardHeader>
+            <CardTitle className="text-white text-xl font-bold">
+              For Job Seekers
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-gray-400 text-sm leading-relaxed">
+            Search and apply for jobs, track applications, and more.
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gray-900 border border-gray-800 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl">
+          <CardHeader>
+            <CardTitle className="text-white text-xl font-bold">
+              For Employers
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-gray-400 text-sm leading-relaxed">
+            Post jobs, manage applications, and find the best candidates.
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="pb-20 w-full">
+        <Accordion type="single" collapsible className="w-full space-y-4">
+          {faqs.map((faq, index) => (
+            <AccordionItem
+              key={index}
+              value={`item-${index}`}
+              className="border border-gray-800 rounded-lg px-4 bg-gray-900 data-[state=open]:border-blue-500 transition-colors duration-200"
+            >
+              <AccordionTrigger className="text-white hover:text-blue-400 text-left font-medium py-4 hover:no-underline">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-gray-400 text-sm pb-4 leading-relaxed">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </section>
     </div>
   );

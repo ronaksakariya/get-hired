@@ -191,4 +191,5 @@ function CarouselNext({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel };
