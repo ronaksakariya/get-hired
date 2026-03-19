@@ -17,7 +17,7 @@ const Navbar = () => {
           <Button
             variant="outline"
             size="lg"
-            className="border-gray-500 bg-transparent text-white hover:bg-white/10 hover:text-white cursor-pointer px-6 py-6 text-lg sm:text-xl"
+            className="border-gray-500 bg-transparent text-white hover:bg-white/10 hover:text-white cursor-pointer px-6 py-6 text-lg sm:text-xl hover:-translate-y-1 hover:scale-105 transition-all duration-300"
           >
             Login
           </Button>
