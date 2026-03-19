@@ -130,12 +130,12 @@ const HeroSection = () => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border border-gray-800 rounded-lg px-4 bg-gray-900 data-[state=open]:border-blue-500 transition-colors duration-200"
+              className="border border-white/10 rounded-xl px-6 bg-white/5 backdrop-blur-sm data-[state=open]:bg-white/10 data-[state=open]:border-white/20 transition-all duration-300 shadow-sm"
             >
-              <AccordionTrigger className="text-white hover:text-blue-400 text-left font-medium py-4 hover:no-underline">
+              <AccordionTrigger className="text-gray-200 hover:text-white text-left font-semibold py-4 hover:no-underline text-base sm:text-lg">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-400 text-sm pb-4 leading-relaxed">
+              <AccordionContent className="text-gray-400 text-sm sm:text-base pb-5 leading-relaxed">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
