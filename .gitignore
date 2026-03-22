@@ -33,3 +33,6 @@ coverage
 
 # OS files
 Thumbs.db
+
+# agents file
+.agents/
