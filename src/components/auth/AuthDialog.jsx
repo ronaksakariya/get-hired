@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/utils/supabase";
 import {
@@ -59,16 +59,26 @@ const AuthDialog = ({ open, setOpen }) => {
     else setSignUpSuccess(true);
   };
 
+  useEffect(() => {
+    if (!open) {
+      setSignInEmail("");
+      setSignInPassword("");
+      setSignInError("");
+      setSignUpName("");
+      setSignUpEmail("");
+      setSignUpPassword("");
+      setSignUpError("");
+      setSignUpSuccess(false);
+      setTab("signin");
+    }
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="p-0 border rounded-2xl sm:max-w-md"
-        style={{
-          background: "#0d1117",
-          borderColor: "rgba(255,255,255,0.08)",
-        }}
+        className="p-0 border rounded-2xl sm:max-w-md bg-[#0d1117] border-white/8"
       >
-        <div className="px-6 pt-6 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="px-6 pt-6 pb-5 border-b border-b-white/6">
           <DialogHeader>
             <DialogTitle className="text-2xl font-semibold text-white leading-tight">
               Welcome back
@@ -81,8 +91,7 @@ const AuthDialog = ({ open, setOpen }) => {
 
         <div className="px-6 pb-6 pt-5">
           <div
-            className="flex w-full p-1 rounded-xl mb-5"
-            style={{ background: "#161b22" }}
+            className="flex w-full p-1 rounded-xl mb-5 bg-[#161b22]"
           >
             <button
               type="button"
@@ -121,8 +130,7 @@ const AuthDialog = ({ open, setOpen }) => {
                   required
                   value={signInEmail}
                   onChange={(e) => setSignInEmail(e.target.value)}
-                  className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500"
-                  style={{ background: "#161b22", border: "1px solid rgba(255,255,255,0.08)" }}
+                  className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500 bg-[#161b22] border border-white/8"
                 />
               </div>
 
@@ -137,8 +145,7 @@ const AuthDialog = ({ open, setOpen }) => {
                   required
                   value={signInPassword}
                   onChange={(e) => setSignInPassword(e.target.value)}
-                  className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500"
-                  style={{ background: "#161b22", border: "1px solid rgba(255,255,255,0.08)" }}
+                  className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500 bg-[#161b22] border border-white/8"
                 />
               </div>
 
@@ -177,8 +184,7 @@ const AuthDialog = ({ open, setOpen }) => {
                     required
                     value={signUpName}
                     onChange={(e) => setSignUpName(e.target.value)}
-                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500"
-                    style={{ background: "#161b22", border: "1px solid rgba(255,255,255,0.08)" }}
+                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500 bg-[#161b22] border border-white/8"
                   />
                 </div>
 
@@ -193,8 +199,7 @@ const AuthDialog = ({ open, setOpen }) => {
                     required
                     value={signUpEmail}
                     onChange={(e) => setSignUpEmail(e.target.value)}
-                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500"
-                    style={{ background: "#161b22", border: "1px solid rgba(255,255,255,0.08)" }}
+                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500 bg-[#161b22] border border-white/8"
                   />
                 </div>
 
@@ -210,8 +215,7 @@ const AuthDialog = ({ open, setOpen }) => {
                     minLength={6}
                     value={signUpPassword}
                     onChange={(e) => setSignUpPassword(e.target.value)}
-                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500"
-                    style={{ background: "#161b22", border: "1px solid rgba(255,255,255,0.08)" }}
+                    className="h-11 rounded-xl text-white placeholder:text-zinc-500 focus-visible:ring-0 focus-visible:border-blue-500 bg-[#161b22] border border-white/8"
                   />
                 </div>
 

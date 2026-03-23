@@ -68,13 +68,7 @@ const HeroSection = () => {
               stopOnMouseEnter: false,
             }),
           ]}
-          className="w-full"
-          style={{
-            maskImage:
-              "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
-          }}
+          className="w-full mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <CarouselContent className="flex items-center">
             {[...companies, ...companies].map((company, index) => (
