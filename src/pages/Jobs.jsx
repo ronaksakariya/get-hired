@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,12 +18,41 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MapPin, Briefcase, Search } from "lucide-react";
-import { DUMMY_JOBS, JOB_TYPES, LOCATIONS } from "@/data/const";
+import { JOB_TYPES, LOCATIONS } from "@/data/const";
+import { supabase } from "@/utils/supabase";
+import useAuth from "@/context/useAuth";
 
 const Jobs = () => {
+  const { user, role } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("all-locations");
   const [jobTypeFilter, setJobTypeFilter] = useState("all-types");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const { data, error: supabaseError } = await supabase
+          .from("jobs")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (supabaseError) throw supabaseError;
+        setJobs(data || []);
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+        setError("Failed to load jobs. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const clearFilters = () => {
     setSearchQuery("");
@@ -32,10 +61,10 @@ const Jobs = () => {
   };
 
   const filteredJobs = useMemo(() => {
-    return DUMMY_JOBS.filter((job) => {
+    return jobs.filter((job) => {
       const matchesSearch =
-        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.company.toLowerCase().includes(searchQuery.toLowerCase());
+        job.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.company_name?.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesLocation =
         locationFilter === "all-locations" || job.location === locationFilter;
@@ -45,7 +74,7 @@ const Jobs = () => {
 
       return matchesSearch && matchesLocation && matchesType;
     });
-  }, [searchQuery, locationFilter, jobTypeFilter]);
+  }, [jobs, searchQuery, locationFilter, jobTypeFilter]);
 
   return (
     <div className="w-full bg-[#000814] text-white pt-6 pb-20">
@@ -121,7 +150,22 @@ const Jobs = () => {
       </div>
 
       {/* Jobs Grid */}
-      {filteredJobs.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      ) : error ? (
+        <div className="text-center py-20 bg-[#0d1117] rounded-3xl flex flex-col items-center justify-center">
+          <p className="text-red-400 mb-6">{error}</p>
+          <Button
+            onClick={() => window.location.reload()}
+            variant="outline"
+            className="text-white border-white/20 hover:bg-white/10"
+          >
+            Try Again
+          </Button>
+        </div>
+      ) : filteredJobs.length === 0 ? (
         <div className="text-center py-20 bg-[#0d1117] rounded-3xl flex flex-col items-center justify-center">
           <Search className="h-12 w-12 text-zinc-600 mb-4" />
           <h2 className="text-2xl font-semibold mb-2 text-white">
@@ -142,8 +186,8 @@ const Jobs = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="bg-white p-2.5 rounded-xl h-14 w-14 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <img
-                      src={job.logo}
-                      alt={`${job.company} logo`}
+                      src={job.company_logo}
+                      alt={`${job.company_name} logo`}
                       className="h-full w-full object-contain"
                     />
                   </div>
@@ -152,7 +196,7 @@ const Jobs = () => {
                   {job.title}
                 </CardTitle>
                 <p className="text-zinc-400 font-medium mt-1.5 text-sm">
-                  {job.company}
+                  {job.company_name}
                 </p>
               </CardHeader>
 
@@ -179,9 +223,32 @@ const Jobs = () => {
               </CardContent>
 
               <CardFooter className="pt-0 pb-6 px-6 bg-transparent">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white border-none rounded-xl font-semibold transition-all h-12 cursor-pointer">
-                  Apply Now
-                </Button>
+                {user ? (
+                  role === "recruiter" ? (
+                    user.id === job.recruiter_id ? (
+                      <div className="flex gap-3 w-full">
+                        <Button variant="outline" className="flex-1 border-white/20 text-white hover:bg-white/10 rounded-xl font-semibold h-12 tracking-wide">
+                          Edit
+                        </Button>
+                        <Button variant="destructive" className="flex-1 rounded-xl font-semibold h-12 hover:bg-red-600 tracking-wide">
+                          Delete
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button disabled className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold h-12 cursor-not-allowed tracking-wide">
+                        Recruiter View
+                      </Button>
+                    )
+                  ) : (
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white border-none rounded-xl font-semibold transition-all h-12 cursor-pointer tracking-wide">
+                      Apply Now
+                    </Button>
+                  )
+                ) : (
+                  <Button disabled className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold transition-all h-12 cursor-not-allowed tracking-wide">
+                    Login to Apply
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}
