@@ -36,13 +36,14 @@ const AuthDialog = ({ open, setOpen }) => {
       email: signInEmail,
       password: signInPassword,
     });
-    
+
     if (error) {
       setSignInError(error.message);
       setSignInLoading(false);
     } else {
+      setSignInLoading(false);
       setOpen(false);
-      
+
       const { data: profile } = await supabase
         .from("profiles")
         .select("role")

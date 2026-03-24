@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/utils/supabase";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Search } from "lucide-react";
+import useAuth from "@/context/useAuth";
 
 const roles = [
   {
@@ -21,53 +22,28 @@ const roles = [
 
 const OnboardingPage = () => {
   const navigate = useNavigate();
+  const { user, role, loading } = useAuth();
   const [selected, setSelected] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const checkUserAndProfile = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    if (loading) return;
 
-      if (!session?.user) {
-        navigate("/");
-        return;
-      }
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", session.user.id)
-        .single();
-
-      if (profile?.role) {
-        navigate(profile.role === "recruiter" ? "/post-job" : "/jobs");
-        return;
-      }
-
-      setLoading(false);
-    };
-
-    checkUserAndProfile();
-  }, [navigate]);
-
-  const handleContinue = async () => {
-    if (!selected) return;
-    setSaving(true);
-    setError("");
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    const user = session?.user;
     if (!user) {
       navigate("/");
       return;
     }
+
+    if (role) {
+      navigate(role === "recruiter" ? "/post-job" : "/jobs");
+    }
+  }, [user, role, loading, navigate]);
+
+  const handleContinue = async () => {
+    if (!selected || !user) return;
+    setSaving(true);
+    setError("");
 
     const { error: upsertError } = await supabase.from("profiles").upsert({
       id: user.id,
@@ -159,7 +135,9 @@ const OnboardingPage = () => {
           })}
         </div>
 
-        {error && <p className="text-sm text-red-400 mb-4 text-center">{error}</p>}
+        {error && (
+          <p className="text-sm text-red-400 mb-4 text-center">{error}</p>
+        )}
 
         <Button
           onClick={handleContinue}

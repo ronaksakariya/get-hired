@@ -1,25 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import AuthDialog from "@/components/auth/AuthDialog";
 import { supabase } from "@/utils/supabase";
+import useAuth from "@/context/useAuth";
 
 const Navbar = () => {
   const [authOpen, setAuthOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    navigate("/");
   };
 
   const displayName =
