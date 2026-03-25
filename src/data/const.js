@@ -1,12 +1,12 @@
-export const companies = [
-  { name: "Amazon", logo: "/companies/amazon.svg" },
-  { name: "Meta", logo: "/companies/meta.svg" },
-  { name: "Microsoft", logo: "/companies/microsoft.webp" },
-  { name: "Netflix", logo: "/companies/netflix.png" },
-  { name: "Uber", logo: "/companies/uber.svg" },
-  { name: "Google", logo: "/companies/google.webp" },
-  { name: "IBM", logo: "/companies/ibm.svg" },
-  { name: "Atlassian", logo: "/companies/atlassian.svg" },
+export const COMPANIES = [
+  { id: "amazon", name: "Amazon", logo: "/companies/amazon.svg" },
+  { id: "meta", name: "Meta", logo: "/companies/meta.svg" },
+  { id: "microsoft", name: "Microsoft", logo: "/companies/microsoft.webp" },
+  { id: "netflix", name: "Netflix", logo: "/companies/netflix.png" },
+  { id: "uber", name: "Uber", logo: "/companies/uber.svg" },
+  { id: "google", name: "Google", logo: "/companies/google.webp" },
+  { id: "ibm", name: "IBM", logo: "/companies/ibm.svg" },
+  { id: "atlassian", name: "Atlassian", logo: "/companies/atlassian.svg" },
 ];
 
 export const faqs = [

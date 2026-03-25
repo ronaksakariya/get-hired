@@ -22,7 +22,7 @@ const roles = [
 
 const OnboardingPage = () => {
   const navigate = useNavigate();
-  const { user, role, loading } = useAuth();
+  const { user, role, loading, fetchRole } = useAuth();
   const [selected, setSelected] = useState(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -51,13 +51,15 @@ const OnboardingPage = () => {
       role: selected,
     });
 
-    setSaving(false);
-
     if (upsertError) {
+      setSaving(false);
       setError("Failed to save your role. Please try again.");
       return;
     }
 
+    await fetchRole(user.id);
+    
+    setSaving(false);
     navigate(selected === "recruiter" ? "/post-job" : "/jobs");
   };
 

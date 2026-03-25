@@ -13,11 +13,7 @@ const router = createBrowserRouter([
       { path: "/", element: <LandingPage /> },
       {
         path: "/jobs",
-        element: (
-          <ProtectedRoute allowedRole="candidate">
-            <Jobs />
-          </ProtectedRoute>
-        ),
+        element: <Jobs />,
       },
       {
         path: "/post-job",

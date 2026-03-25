@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import useAuth from "@/context/useAuth";
 import AuthDialog from "@/components/auth/AuthDialog";
-import { companies, faqs } from "@/data/const";
+import { COMPANIES, faqs } from "@/data/const";
 import {
   Carousel,
   CarouselContent,
@@ -106,7 +106,7 @@ const HeroSection = () => {
           className="w-full mask-[linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <CarouselContent className="flex items-center">
-            {[...companies, ...companies].map((company, index) => (
+            {[...COMPANIES, ...COMPANIES].map((company, index) => (
               <CarouselItem
                 key={index}
                 className="basis-auto pl-12 sm:pl-16 md:pl-20"
