@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import AppLayout from "./layout/AppLayout";
 import OnboardingPage from "./pages/OnboardingPage";
 import Jobs from "./pages/Jobs";
+import JobDetails from "./pages/JobDetails";
 import PostJob from "./pages/PostJob";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/jobs",
         element: <Jobs />,
+      },
+      {
+        path: "/job/:id",
+        element: <JobDetails />,
       },
       {
         path: "/post-job",
