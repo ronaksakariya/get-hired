@@ -28,12 +28,12 @@ const companiesMap = new Map(COMPANIES.map((c) => [c.id, c]));
 // Extract JobCard to its own memoized component to prevent unnecessary re-renders
 const JobCard = memo(({ job, user, role }) => {
   const companyData = companiesMap.get(job.company_id) || {};
-  
+
   return (
     <Card className="bg-[#0d1117] border-transparent hover:border-white/15 transition-all duration-300 group cursor-pointer flex flex-col rounded-2xl overflow-hidden hover:-translate-y-1">
       <CardHeader className="pb-4 relative">
         <div className="flex items-start justify-between mb-4">
-          <div className="bg-white p-2.5 rounded-xl h-14 w-14 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+          <div className="bg-gray-900 p-2.5 rounded-xl h-14 w-14 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
             <img
               src={companyData.logo || "/companies/amazon.svg"}
               alt={`${companyData.name || job.company_id} logo`}
@@ -71,20 +71,29 @@ const JobCard = memo(({ job, user, role }) => {
         </p>
       </CardContent>
 
-      <CardFooter className="pt-0 pb-6 px-6 bg-transparent">
+      <CardFooter className="pt-0 pb-6 px-6 bg-transparent border-t-0">
         {user ? (
           role === "recruiter" ? (
             user.id === job.recruiter_id ? (
               <div className="flex gap-3 w-full">
-                <Button variant="outline" className="flex-1 border-white/20 text-white hover:bg-white/10 rounded-xl font-semibold h-12 tracking-wide">
+                <Button
+                  variant="secondary"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 border-white/20 text-white rounded-xl font-semibold h-12 tracking-wide"
+                >
                   Edit
                 </Button>
-                <Button variant="destructive" className="flex-1 rounded-xl font-semibold h-12 hover:bg-red-600 tracking-wide">
+                <Button
+                  variant="ghost"
+                  className="flex-1 text-white hover:text-white rounded-xl font-semibold h-12 hover:bg-red-700 tracking-wide"
+                >
                   Delete
                 </Button>
               </div>
             ) : (
-              <Button disabled className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold h-12 cursor-not-allowed tracking-wide">
+              <Button
+                disabled
+                className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold h-12 cursor-not-allowed tracking-wide"
+              >
                 Recruiter View
               </Button>
             )
@@ -94,7 +103,10 @@ const JobCard = memo(({ job, user, role }) => {
             </Button>
           )
         ) : (
-          <Button disabled className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold transition-all h-12 cursor-not-allowed tracking-wide">
+          <Button
+            disabled
+            className="w-full bg-zinc-800 text-zinc-400 border-none rounded-xl font-semibold transition-all h-12 cursor-not-allowed tracking-wide"
+          >
             Login to Apply
           </Button>
         )}
