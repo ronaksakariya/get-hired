@@ -7,7 +7,6 @@ import useAuth from "@/context/useAuth";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilters from "@/components/jobs/JobFilters";
 
-// Create a map for O(1) lookups outside the component
 const companiesMap = new Map(COMPANIES.map((c) => [c.id, c]));
 
 const Jobs = () => {
@@ -22,7 +21,6 @@ const Jobs = () => {
   useEffect(() => {
     if (authLoading) return;
 
-    // Use isMounted to prevent setting state on unmounted component
     let isMounted = true;
 
     const fetchJobs = async () => {
@@ -69,8 +67,6 @@ const Jobs = () => {
     const lowerSearchQuery = searchQuery.toLowerCase();
 
     return jobs.filter((job) => {
-      // Short-circuit evaluations:
-      // Start with string matching which is fast and boolean comparisons
       const matchesLocation =
         locationFilter === "all-locations" || job.location === locationFilter;
       if (!matchesLocation) return false;
@@ -79,7 +75,6 @@ const Jobs = () => {
         jobTypeFilter === "all-types" || job.type === jobTypeFilter;
       if (!matchesType) return false;
 
-      // Only perform string finding if the first two match, and if search query exists
       if (!lowerSearchQuery) return true;
 
       const companyData = companiesMap.get(job.company_id);
@@ -104,7 +99,6 @@ const Jobs = () => {
         </p>
       </div>
 
-      {/* Filters Section */}
       {role !== "recruiter" && (
         <JobFilters
           searchQuery={searchQuery}
@@ -117,7 +111,6 @@ const Jobs = () => {
         />
       )}
 
-      {/* Jobs Grid */}
       {loading ? (
         <div className="flex justify-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>

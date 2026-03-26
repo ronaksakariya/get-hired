@@ -102,7 +102,6 @@ const JobDetails = () => {
           <ChevronLeft className="w-4 h-4 mr-1" /> Back to Jobs
         </button>
 
-        {/* Header Section */}
         <div className="bg-[#0d1117] rounded-3xl p-6 md:p-10 mb-8 border border-white/5 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-blue-600 to-indigo-600"></div>
 
@@ -190,7 +189,6 @@ const JobDetails = () => {
           </div>
         </div>
 
-        {/* Content Section */}
         <div className="bg-[#0d1117] rounded-3xl p-6 md:p-10 border border-white/5">
           <h2 className="text-2xl font-bold mb-6">About the Role</h2>
           <div className="prose prose-invert max-w-none text-zinc-300 whitespace-pre-wrap leading-relaxed">

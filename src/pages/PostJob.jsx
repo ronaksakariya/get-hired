@@ -48,7 +48,6 @@ const PostJob = () => {
     e.preventDefault();
     if (!user) return setError("You must be logged in to post a job");
 
-    // Basic required check
     if (Object.values(formData).some((v) => !v.trim())) {
       setError("Please fill in all fields");
       return;
@@ -70,7 +69,6 @@ const PostJob = () => {
 
       if (supabaseError) throw supabaseError;
 
-      // Upon success, redirect to the jobs list
       navigate("/jobs");
     } catch (err) {
       console.error(err);
@@ -102,7 +100,6 @@ const PostJob = () => {
           onSubmit={handleSubmit}
           className="bg-[#0d1117] p-6 md:p-8 rounded-2xl flex flex-col gap-6"
         >
-          {/* Job Title */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-300 flex items-center gap-2">
               <Type className="w-4 h-4 text-zinc-500" />
@@ -146,7 +143,6 @@ const PostJob = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Location */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-zinc-500" />
@@ -175,7 +171,6 @@ const PostJob = () => {
               </Select>
             </div>
 
-            {/* Job Type */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300 flex items-center gap-2">
                 <Briefcase className="w-4 h-4 text-zinc-500" />
@@ -205,7 +200,6 @@ const PostJob = () => {
             </div>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-300 flex items-center gap-2">
               <FileText className="w-4 h-4 text-zinc-500" />

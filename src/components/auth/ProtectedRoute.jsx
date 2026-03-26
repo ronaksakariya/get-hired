@@ -13,17 +13,14 @@ const ProtectedRoute = ({ children, allowedRole }) => {
     );
   }
 
-  // Not logged in
   if (!user) {
     return <Navigate to="/" replace />;
   }
 
-  // Logged in but no role yet
   if (!role && location.pathname !== "/onboarding") {
     return <Navigate to="/onboarding" replace />;
   }
 
-  // Wrong role for this route
   if (allowedRole && role !== allowedRole) {
     return (
       <Navigate to={role === "candidate" ? "/jobs" : "/post-job"} replace />
