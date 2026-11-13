@@ -50,10 +50,8 @@ const AuthDialog = ({ open, setOpen }) => {
         .eq("id", data.user.id)
         .single();
 
-      if (profile?.role === "recruiter") {
+      if (profile?.role === "recruiter" || profile?.role === "candidate") {
         navigate("/");
-      } else if (profile?.role === "candidate") {
-        navigate("/jobs");
       } else {
         navigate("/onboarding");
       }
@@ -68,6 +66,7 @@ const AuthDialog = ({ open, setOpen }) => {
       email: signUpEmail,
       password: signUpPassword,
       options: { data: { full_name: signUpName } },
+      emailRedirectTo: `${window.location.origin}/`,
     });
     setSignUpLoading(false);
     if (error) setSignUpError(error.message);

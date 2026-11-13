@@ -32,7 +32,7 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center gap-3">
-              <span className="text-gray-300 text-xl font-medium hidden sm:block">
+              <span className="text-gray-300 text-xl font-medium">
                 👋 {displayName}
               </span>
               <Button

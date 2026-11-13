@@ -25,7 +25,7 @@ const HeroSection = () => {
 
   return (
     <div>
-      <section className="flex items-center justify-center  pt-16 sm:pt-12 pb-8 sm:pb-10">
+      <section className="flex items-center justify-center pb-8 sm:pb-10">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl text-white tracking-tighter py-4 text-center">
             <span className="leading-tight">Find Your Dream Job</span>
@@ -46,25 +46,33 @@ const HeroSection = () => {
           <div className="mt-10 sm:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full mx-auto px-4 sm:px-0 max-w-sm sm:max-w-none">
             {!loading && (
               <>
-                {(!user || role === "candidate" || role === "recruiter") &&
-                  (user ? (
-                    <Link to="/jobs" className="w-full sm:w-auto">
-                      <Button
-                        size="lg"
-                        className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold cursor-pointer bg-blue-600 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(59,130,246,0.3)]"
-                      >
-                        Find Jobs
-                      </Button>
-                    </Link>
-                  ) : (
+                {!user ? (
+                  <Button
+                    size="lg"
+                    onClick={() => setAuthOpen(true)}
+                    className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold cursor-pointer bg-blue-600 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(59,130,246,0.3)]"
+                  >
+                    Find Jobs
+                  </Button>
+                ) : role === "candidate" || role === "recruiter" ? (
+                  <Link to="/jobs" className="w-full sm:w-auto">
                     <Button
                       size="lg"
-                      onClick={() => setAuthOpen(true)}
                       className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold cursor-pointer bg-blue-600 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(59,130,246,0.3)]"
                     >
                       Find Jobs
                     </Button>
-                  ))}
+                  </Link>
+                ) : (
+                  <Link to="/onboarding" className="w-full sm:w-auto">
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold cursor-pointer bg-blue-600 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(59,130,246,0.3)]"
+                    >
+                      Choose Your Role
+                    </Button>
+                  </Link>
+                )}
 
                 {user && role === "candidate" && (
                   <Link to="/my-applications" className="w-full sm:w-auto">
@@ -77,25 +85,24 @@ const HeroSection = () => {
                   </Link>
                 )}
 
-                {(!user || role === "recruiter") &&
-                  (user ? (
-                    <Link to="/post-job" className="w-full sm:w-auto">
-                      <Button
-                        size="lg"
-                        className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold text-white cursor-pointer bg-red-700 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(239,68,68,0.3)]"
-                      >
-                        Post a job
-                      </Button>
-                    </Link>
-                  ) : (
+                {!user ? (
                     <Button
                       size="lg"
                       onClick={() => setAuthOpen(true)}
+                    className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold text-white cursor-pointer bg-red-700 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(239,68,68,0.3)]"
+                    >
+                      Post a job
+                    </Button>
+                ) : role === "recruiter" ? (
+                  <Link to="/post-job" className="w-full sm:w-auto">
+                    <Button
+                      size="lg"
                       className="w-full sm:w-auto px-8 py-6 sm:py-8 text-base sm:text-lg font-semibold text-white cursor-pointer bg-red-700 hover:-translate-y-2 hover:scale-105 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(239,68,68,0.3)]"
                     >
                       Post a job
                     </Button>
-                  ))}
+                  </Link>
+                ) : null}
               </>
             )}
           </div>
